@@ -2,8 +2,8 @@ const chatBox = document.getElementById('chat-box');
 const messageInput = document.getElementById('message-input');
 const sendBtn = document.getElementById('send-btn');
 
-// Replace with the ngrok URL (use wss if the URL starts with https)
-const socket = new WebSocket('wss://abcd1234.ngrok.io');
+// Replace with the ngrok URL
+const socket = new WebSocket('ws://0.0.0.0:8081');  // Use the ngrok URL here
 
 // Display incoming messages
 socket.onmessage = (event) => {
