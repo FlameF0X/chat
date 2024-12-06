@@ -2,8 +2,8 @@ const chatBox = document.getElementById('chat-box');
 const messageInput = document.getElementById('message-input');
 const sendBtn = document.getElementById('send-btn');
 
-// Connect to WebSocket server
-const socket = new WebSocket('wss://echo.websocket.org');
+// Replace with the ngrok URL (use wss if the URL starts with https)
+const socket = new WebSocket('wss://abcd1234.ngrok.io');
 
 // Display incoming messages
 socket.onmessage = (event) => {
@@ -29,4 +29,3 @@ socket.onerror = (error) => {
   errorElement.textContent = "Connection error. Please try again.";
   chatBox.appendChild(errorElement);
 };
-
