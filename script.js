@@ -3,7 +3,7 @@ const messageInput = document.getElementById('message-input');
 const sendBtn = document.getElementById('send-btn');
 
 // Replace with the ngrok URL
-const socket = new WebSocket('ws://0.0.0.0:8081');  // Use the ngrok URL here
+const socket = new WebSocket('wss://0.0.0.0:8081.ngrok.io');  // Use the ngrok URL here
 
 // Display incoming messages
 socket.onmessage = (event) => {
