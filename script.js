@@ -1,31 +1,29 @@
-const chatBox = document.getElementById('chat-box');
-const messageInput = document.getElementById('message-input');
-const sendBtn = document.getElementById('send-btn');
+const chatBox = document.getElementById("chat-box");
+const messageInput = document.getElementById("message");
 
-// Replace with the ngrok URL
-const socket = new WebSocket('wss://0.0.0.0:8081.ngrok.io');  // Use the ngrok URL here
+function sendMessage() {
+    const message = messageInput.value.trim();
+    if (message) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.textContent = `You: ${message}`;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        messageInput.value = '';
 
-// Display incoming messages
-socket.onmessage = (event) => {
-  const messageElement = document.createElement('p');
-  messageElement.textContent = event.data;
-  chatBox.appendChild(messageElement);
-  chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
-};
-
-// Send message
-sendBtn.addEventListener('click', () => {
-  const message = messageInput.value.trim();
-  if (message) {
-    socket.send(message);
-    messageInput.value = '';
-  }
-});
-
-// Handle connection errors
-socket.onerror = (error) => {
-  console.error('WebSocket error:', error);
-  const errorElement = document.createElement('p');
-  errorElement.textContent = "Connection error. Please try again.";
-  chatBox.appendChild(errorElement);
-};
+        // Send message to the backend via Localtunnel URL
+        fetch('https://abc123.loca.lt/chat', {  // Replace with your actual Localtunnel URL
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const replyElement = document.createElement("div");
+            replyElement.classList.add("message");
+            replyElement.textContent = `Bot: ${data.reply}`;
+            chatBox.appendChild(replyElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    }
+}
